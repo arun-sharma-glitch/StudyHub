@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Upload your study notes to share with other students on StudyHub.">
+  <title>Upload Notes - StudyHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/upload.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/global.css">
+</head>
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="sidebar-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          StudyHub
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Menu</span>
+          <a href="/pages/dashboard.html" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+              <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+            </svg>
+            Browse Notes
+          </a>
+          <a href="/pages/upload.html" class="sidebar-link active">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload Notes
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Saved Notes
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            My Downloads
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Account</span>
+          <a href="/pages/profile.html" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Profile
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            Settings
+          </a>
+          <a href="/" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Log Out
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/pages/profile.html" class="sidebar-user">
+          <div class="sidebar-avatar">JD</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">John Doe</span>
+            <span class="sidebar-user-email">john@university.edu</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <h1 class="page-title">Upload Notes</h1>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="card" style="max-width: 800px;">
+          <div class="card-body">
+            <form id="uploadForm">
+              <!-- Upload Area -->
+              <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" name="file" accept=".pdf,.doc,.docx,.ppt,.pptx" hidden>
+                <div class="upload-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
+                <h3>Drag and drop your file here</h3>
+                <p>or click to browse from your computer</p>
+                <button type="button" class="btn btn-secondary" id="browseBtn">Browse Files</button>
+                <p class="upload-formats">Supported formats: PDF, DOC, DOCX, PPT, PPTX (Max 50MB)</p>
+              </div>
+
+              <!-- Upload Preview -->
+              <div class="upload-preview" id="uploadPreview" style="display: none;">
+                <div class="upload-file-item">
+                  <div class="upload-file-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                  </div>
+                  <div class="upload-file-info">
+                    <div class="upload-file-name" id="fileName">document.pdf</div>
+                    <div class="upload-file-size" id="fileSize">2.4 MB</div>
+                    <div class="upload-file-progress">
+                      <div class="upload-file-progress-bar" id="progressBar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-icon" id="removeFile" aria-label="Remove file">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Note Details -->
+              <div style="margin-top: 32px;">
+                <div class="form-group">
+                  <label class="form-label" for="title">Title *</label>
+                  <input type="text" id="title" name="title" class="form-input" placeholder="Enter a descriptive title for your notes" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                  <div class="form-group">
+                    <label class="form-label" for="subject">Subject *</label>
+                    <select id="subject" name="subject" class="form-input form-select" required>
+                      <option value="">Select subject</option>
+                      <option value="cs">Computer Science</option>
+                      <option value="math">Mathematics</option>
+                      <option value="physics">Physics</option>
+                      <option value="biology">Biology</option>
+                      <option value="chemistry">Chemistry</option>
+                      <option value="economics">Economics</option>
+                      <option value="psychology">Psychology</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="semester">Semester *</label>
+                    <select id="semester" name="semester" class="form-input form-select" required>
+                      <option value="">Select semester</option>
+                      <option value="fall-2024">Fall 2024</option>
+                      <option value="spring-2024">Spring 2024</option>
+                      <option value="fall-2023">Fall 2023</option>
+                      <option value="spring-2023">Spring 2023</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="course">Course Name</label>
+                  <input type="text" id="course" name="course" class="form-input" placeholder="e.g., CS 101 - Introduction to Programming">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="description">Description</label>
+                  <textarea id="description" name="description" class="form-input form-textarea" placeholder="Describe what topics are covered in these notes..."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="tags">Tags</label>
+                  <input type="text" id="tags" name="tags" class="form-input" placeholder="Enter tags separated by commas (e.g., algorithms, sorting, data structures)">
+                  <p class="form-hint">Add relevant tags to help others find your notes</p>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-checkbox">
+                    <input type="checkbox" name="terms" required>
+                    <span>I confirm that I own these notes and have the right to share them</span>
+                  </label>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-top: 32px;">
+                  <button type="submit" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Upload Notes
+                  </button>
+                  <button type="button" class="btn btn-secondary" onclick="window.location.href='/pages/dashboard.html'">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/dashboard.js"></script>
+  <script src="../js/upload.js"></script>
+</body>
+</html>

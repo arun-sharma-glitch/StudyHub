@@ -1,0 +1,67 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Reset */
+*{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+/* Global Variables */
+:root{
+--primary-color: #4f46e5;
+--secondary-color: #eef2ff;
+--background-color: #f5f7fb;
+--text-color: #1f2937;
+--light-text: #6b7280;
+--white: #ffffff;
+--border-color: #e5e7eb;
+
+
+--shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+--radius-sm: 8px;
+--radius-md: 12px;
+--radius-lg: 18px;
+
+}
+
+/* Body */
+body{
+font-family: 'Inter', sans-serif;
+background-color: var(--background-color);
+color: var(--text-color);
+}
+
+/* Links */
+a{
+text-decoration: none;
+color: inherit;
+}
+
+/* Buttons */
+button{
+border: none;
+outline: none;
+cursor: pointer;
+font-family: inherit;
+}
+
+/* Images */
+img{
+max-width: 100%;
+display: block;
+}
+
+/* Lists */
+ul{
+list-style: none;
+}
+
+/* Container */
+.container{
+width: 90%;
+max-width: 1200px;
+margin: auto;
+}

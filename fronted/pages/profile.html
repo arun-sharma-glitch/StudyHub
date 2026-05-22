@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View and manage your StudyHub profile.">
+  <title>Profile - StudyHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/profile.css"/>
+</head>
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="sidebar-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          StudyHub
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Menu</span>
+          <a href="/pages/dashboard.html" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+              <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+              <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+              <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+            </svg>
+            Browse Notes
+          </a>
+          <a href="/pages/upload.html" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload Notes
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Saved Notes
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            My Downloads
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <span class="sidebar-section-title">Account</span>
+          <a href="/pages/profile.html" class="sidebar-link active">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Profile
+          </a>
+          <a href="#" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            Settings
+          </a>
+          <a href="/" class="sidebar-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Log Out
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/pages/profile.html" class="sidebar-user">
+          <div class="sidebar-avatar">JD</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name">John Doe</span>
+            <span class="sidebar-user-email">john@university.edu</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="main-header">
+        <div class="main-header-left">
+          <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <h1 class="page-title">Profile</h1>
+        </div>
+       
+      </header>
+
+      <div class="page-content">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-top">
+            <div class="profile-avatar">JD</div>
+            <div class="profile-info">
+              <h2 class="profile-name">John Doe</h2>
+              <p class="profile-university">Stanford University</p>
+              <p class="profile-bio">Computer Science major passionate about algorithms and machine learning. Love sharing study materials to help fellow students succeed!</p>
+              <button class="btn btn-secondary btn-sm">Edit Profile</button>
+            </div>
+          </div>
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <div class="profile-stat-value">24</div>
+              <div class="profile-stat-label">Notes Uploaded</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">12.5k</div>
+              <div class="profile-stat-label">Total Downloads</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">156</div>
+              <div class="profile-stat-label">Followers</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">42</div>
+              <div class="profile-stat-label">Following</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="notes">My Notes</button>
+          <button class="tab-btn" data-tab="saved">Saved</button>
+          <button class="tab-btn" data-tab="settings">Settings</button>
+        </div>
+
+        <!-- Tab Content: My Notes -->
+        <div class="tab-content active" id="notes">
+          <div class="notes-grid">
+            <!-- Note Card 1 -->
+            <article class="card note-card">
+              <div class="note-card-preview">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </div>
+              <div class="note-card-content">
+                <span class="note-card-subject">Computer Science</span>
+                <h3 class="note-card-title">Data Structures & Algorithms Complete Guide</h3>
+                <div class="note-card-meta">
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                    45 pages
+                  </span>
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    1.2k
+                  </span>
+                </div>
+              </div>
+              <div class="note-card-footer">
+                <span style="font-size: 0.813rem; color: var(--text-muted);">Uploaded Oct 15, 2024</span>
+                <button class="btn btn-ghost btn-icon" aria-label="More options">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- Note Card 2 -->
+            <article class="card note-card">
+              <div class="note-card-preview">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </div>
+              <div class="note-card-content">
+                <span class="note-card-subject">Computer Science</span>
+                <h3 class="note-card-title">Machine Learning Basics - Neural Networks</h3>
+                <div class="note-card-meta">
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                    64 pages
+                  </span>
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    3.2k
+                  </span>
+                </div>
+              </div>
+              <div class="note-card-footer">
+                <span style="font-size: 0.813rem; color: var(--text-muted);">Uploaded Sep 28, 2024</span>
+                <button class="btn btn-ghost btn-icon" aria-label="More options">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                  </svg>
+                </button>
+              </div>
+            </article>
+
+            <!-- Note Card 3 -->
+            <article class="card note-card">
+              <div class="note-card-preview">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </div>
+              <div class="note-card-content">
+                <span class="note-card-subject">Computer Science</span>
+                <h3 class="note-card-title">Operating Systems - Process Management</h3>
+                <div class="note-card-meta">
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                    </svg>
+                    38 pages
+                  </span>
+                  <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="7 10 12 15 17 10"></polyline>
+                      <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    892
+                  </span>
+                </div>
+              </div>
+              <div class="note-card-footer">
+                <span style="font-size: 0.813rem; color: var(--text-muted);">Uploaded Sep 10, 2024</span>
+                <button class="btn btn-ghost btn-icon" aria-label="More options">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="19" cy="12" r="1"></circle>
+                    <circle cx="5" cy="12" r="1"></circle>
+                  </svg>
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Tab Content: Saved -->
+        <div class="tab-content" id="saved">
+          <div class="empty-state">
+            <div class="empty-state-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <h3>No saved notes yet</h3>
+            <p>Browse notes and click the bookmark icon to save them for later.</p>
+            <a href="/pages/dashboard.html" class="btn btn-primary">Browse Notes</a>
+          </div>
+        </div>
+
+        <!-- Tab Content: Settings -->
+        <div class="tab-content" id="settings">
+          <div class="settings-section">
+            <h3>Personal Information</h3>
+            <form>
+              <div class="settings-row">
+                <div class="form-group">
+                  <label class="form-label" for="settingsFirstName">First Name</label>
+                  <input type="text" id="settingsFirstName" class="form-input" value="John">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="settingsLastName">Last Name</label>
+                  <input type="text" id="settingsLastName" class="form-input" value="Doe">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="settingsEmail">Email</label>
+                <input type="email" id="settingsEmail" class="form-input" value="john@university.edu">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="settingsUniversity">University</label>
+                <select id="settingsUniversity" class="form-input form-select">
+                  <option value="stanford" selected>Stanford University</option>
+                  <option value="mit">MIT</option>
+                  <option value="harvard">Harvard University</option>
+                  <option value="berkeley">UC Berkeley</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="settingsBio">Bio</label>
+                <textarea id="settingsBio" class="form-input form-textarea">Computer Science major passionate about algorithms and machine learning. Love sharing study materials to help fellow students succeed!</textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+          </div>
+
+          <div class="settings-section">
+            <h3>Change Password</h3>
+            <form>
+              <div class="form-group">
+                <label class="form-label" for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
+              </div>
+              <div class="settings-row">
+                <div class="form-group">
+                  <label class="form-label" for="newPassword">New Password</label>
+                  <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="confirmPassword">Confirm New Password</label>
+                  <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Update Password</button>
+            </form>
+          </div>
+
+          <div class="settings-section">
+            <h3>Danger Zone</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 16px;">Once you delete your account, there is no going back. Please be certain.</p>
+            <button type="button" class="btn" style="background: var(--error); color: white;">Delete Account</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/dashboard.js"></script>
+  <script src="../js/profile.js"></script>
+</body>
+</html>
