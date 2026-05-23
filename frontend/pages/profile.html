@@ -79,7 +79,7 @@
             </svg>
             Settings
           </a>
-          <a href="/" class="sidebar-link">
+          <a href="/logout" class="sidebar-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
@@ -92,10 +92,10 @@
 
       <div class="sidebar-footer">
         <a href="/pages/profile.html" class="sidebar-user">
-          <div class="sidebar-avatar">JD</div>
+          <div class="sidebar-avatar avatar" div></div> <!--avatar new class for taking data from backend-->
           <div class="sidebar-user-info">
-            <span class="sidebar-user-name">John Doe</span>
-            <span class="sidebar-user-email">john@university.edu</span>
+            <span class="sidebar-user-name name" >Loading...</span>
+            <span class="sidebar-user-email email" ></span>
           </div>
         </a>
       </div>
@@ -123,11 +123,11 @@
         <!-- Profile Header -->
         <div class="profile-header">
           <div class="profile-top">
-            <div class="profile-avatar">JD</div>
+            <div class="profile-avatar avatar"></div> <!--avatar new class for taking data from backend-->
             <div class="profile-info">
-              <h2 class="profile-name">John Doe</h2>
-              <p class="profile-university">Stanford University</p>
-              <p class="profile-bio">Computer Science major passionate about algorithms and machine learning. Love sharing study materials to help fellow students succeed!</p>
+              <h2 class="profile-name name">Loading...</h2>
+              <p class="profile-university" id="university-name">Stanford University</p>
+              <p class="profile-bio" id="bio">Computer Science major passionate about algorithms and machine learning. Love sharing study materials to help fellow students succeed!</p>
               <button class="btn btn-secondary btn-sm">Edit Profile</button>
             </div>
           </div>
@@ -310,28 +310,29 @@
         <div class="tab-content" id="settings">
           <div class="settings-section">
             <h3>Personal Information</h3>
-            <form>
+            <form id="save-changes">
               <div class="settings-row">
                 <div class="form-group">
                   <label class="form-label" for="settingsFirstName">First Name</label>
-                  <input type="text" id="settingsFirstName" class="form-input" value="John">
+                  <input type="text" id="settingsFirstName" class="form-input" placeholder="e.g., John">
                 </div>
                 <div class="form-group">
                   <label class="form-label" for="settingsLastName">Last Name</label>
-                  <input type="text" id="settingsLastName" class="form-input" value="Doe">
+                  <input type="text" id="settingsLastName" class="form-input" placeholder="e.g., Doe" >
                 </div>
               </div>
               <div class="form-group">
                 <label class="form-label" for="settingsEmail">Email</label>
-                <input type="email" id="settingsEmail" class="form-input" value="john@university.edu">
+                <input type="email" id="settingsEmail" class="form-input" placeholder="e.g., abc@gmail.com" readonly>
               </div>
               <div class="form-group">
                 <label class="form-label" for="settingsUniversity">University</label>
-                <select id="settingsUniversity" class="form-input form-select">
+                <!-- <select id="settingsUniversity" class="form-input form-select">
                   <option value="stanford" selected>Stanford University</option>
                   <option value="mit">MIT</option>
                   <option value="harvard">Harvard University</option>
-                  <option value="berkeley">UC Berkeley</option>
+                  <option value="berkeley">UC Berkeley</option> -->
+                  <input type="text" id="settingsUniversity" placeholder="university" class="form-input">
                 </select>
               </div>
               <div class="form-group">
@@ -373,6 +374,8 @@
     </main>
   </div>
 
+
+  <script src="../js/userUi.js"></script>
   <script src="../js/dashboard.js"></script>
   <script src="../js/profile.js"></script>
 </body>

@@ -184,4 +184,42 @@ document.addEventListener('DOMContentLoaded', function() {
       window.location.href = '/pages/dashboard.html';
     });
   }
+
+
+
+  // Load user info on dashboard load
+  // loadUserInfo();
+  // const user_profile_name = document.getElementById('user-name');
+  // const user_profile_email = document.getElementById('user-email');
+  // if (user_profile_name && user_profile_email) {
+    // Fetch user info and update the sidebar
+    fetch('/api/user/profile')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch user info');
+        }
+       
+        
+        return response.json();
+      })
+      .then(userData => {
+
+        console.log('User Data:', userData);
+
+         //calling this funtion of userUi 
+        renderUser(userData.user);
+
+        // user_profile_name.textContent = `${userData.user.firstName} ${userData.user.lastName}`;
+        // user_profile_email.textContent = userData.user.email;
+
+        // Optionally, set the avatar initials
+        // const userAvatar = document.getElementById('user-avatar');
+        // if (userAvatar) {
+        //   const initials = `${userData.user.firstName.charAt(0)}${userData.user.lastName.charAt(0)}`;
+        //   userAvatar.textContent = initials.toUpperCase();
+        // }
+      })
+      .catch(error => {
+        console.error('Error:', error )
+      });
 });

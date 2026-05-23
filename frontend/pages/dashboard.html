@@ -78,7 +78,7 @@
             </svg>
             Settings
           </a>
-          <a href="/" class="sidebar-link">
+          <a href="/logout" class="sidebar-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
@@ -91,10 +91,10 @@
 
       <div class="sidebar-footer">
         <a href="/pages/profile.html" class="sidebar-user">
-          <div class="sidebar-avatar">JD</div>
+          <div class="sidebar-avatar avatar" ></div>
           <div class="sidebar-user-info">
-            <span class="sidebar-user-name">John Doe</span>
-            <span class="sidebar-user-email">john@university.edu</span>
+            <span class="sidebar-user-name name" >Loading...</span>
+            <span class="sidebar-user-email email" ></span>   <!--avatar name email  are used to render info only-->
           </div>
         </a>
       </div>
@@ -541,5 +541,6 @@
   </div>
 
   <script src="../js/dashboard.js"></script>
+  <script src="../js/userUi.js"></script>
 </body>
 </html>

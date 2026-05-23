@@ -1,0 +1,81 @@
+const express = require('express');
+const path = require('path');
+const authRoutes = require('../routes/authRoutes.js');
+const userRoutes = require('../routes/userRoutes.js');
+const cookieParser = require('cookie-parser');
+
+
+const app = express();
+
+//middleware to parse JSON request bodies
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../../frontend')));
+
+
+
+
+//this is actually the route for the auth controller, we will add more routes later
+app.use('/api/auth', authRoutes);
+
+//this is actually the route for the user controller, we will add more routes later
+app.use('/api/user', userRoutes);
+
+
+
+//Home Route Index.html
+app.get('/', async (req, res) => {
+
+    const token = req.cookies.token;
+
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+            const user = await userModel.findById(decoded.id);
+
+            if (user) {
+                return res.redirect('/dashboard');
+            }
+        } catch (error) {
+            // If token is invalid or expired, we can ignore the error and proceed to serve the home page
+        }
+    }
+
+    res.sendFile(path.join(__dirname, '../../frontend/pages/index.html'));
+
+});
+
+//Sign up route
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/pages/signup.html'));
+});
+
+//Login route
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/pages/login.html'));
+});
+
+//Logout route
+app.get('/logout', (req, res) => {
+    res.clearCookie(
+        'token',
+        {
+            httpOnly:true,
+            sameSite:'strict'
+        }
+    );
+
+    res.redirect('/');
+    console.log('logout successfull');
+});
+
+//dashboard route
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/pages/dashboard.html'));
+});
+
+
+
+module.exports = app;

@@ -120,4 +120,27 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
+
+
+    fetch('/api/user/profile')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch user info');
+        }
+       
+        return response.json();
+      })
+      .then(userData => {
+
+        console.log('User Data:', userData);
+
+        //calling this funtion of userUi 
+        renderUser(userData.user);
+      })
+      .catch(error => {
+        console.error('Error:', error )
+      }) 
+  // }
 });
+
+
