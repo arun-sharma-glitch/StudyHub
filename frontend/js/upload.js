@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Form submission
   if (uploadForm) {
-    uploadForm.addEventListener('submit', function(e) {
+    uploadForm.addEventListener('submit', async function(e) {
       e.preventDefault();
 
       if (!selectedFile) {
@@ -173,26 +173,52 @@ document.addEventListener('DOMContentLoaded', function() {
       formData.append('description', document.getElementById('description').value);
       formData.append('tags', document.getElementById('tags').value);
 
+      //-------------- ignor this 
       console.log('Uploading:', {
         file: selectedFile.name,
         title,
         subject,
         semester
       });
+      //this is only log
 
-      alert('Notes uploaded successfully!');
-      window.location.href = '/pages/dashboard.html';
+      try {
+        const response = await fetch(
+          '/api/notes/upload',
+          {
+            method: 'POST',
+            body: formData
+          }
+        );
+
+        const data = await response.json();
+
+        if(!response.ok){
+
+            
+            console.log('response not ok');
+
+            throw new Error(
+            data.message
+            );
+        }
+        
+        //notes uploaded successful
+        alert('Notes uploaded successfully!');
+        window.location.href = '/pages/dashboard.html';
+
+      } catch (error) {
+        //getting error in uploading
+        console.log('error in uploading: ', error);
+      }
+
+      
     });
   }
 
 
 
-  // Load user info on dashboard load
-  // loadUserInfo();
-  // const user_profile_name = document.getElementById('user-name');
-  // const user_profile_email = document.getElementById('user-email');
-  // if (user_profile_name && user_profile_email) {
-    // Fetch user info and update the sidebar
+  //fetch user profile to show on sidebar
     fetch('/api/user/profile')
       .then(response => {
         if (!response.ok) {
@@ -208,16 +234,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
          //calling this funtion of userUi 
         renderUser(userData.user);
-
-        // user_profile_name.textContent = `${userData.user.firstName} ${userData.user.lastName}`;
-        // user_profile_email.textContent = userData.user.email;
-
-        // Optionally, set the avatar initials
-        // const userAvatar = document.getElementById('user-avatar');
-        // if (userAvatar) {
-        //   const initials = `${userData.user.firstName.charAt(0)}${userData.user.lastName.charAt(0)}`;
-        //   userAvatar.textContent = initials.toUpperCase();
-        // }
       })
       .catch(error => {
         console.error('Error:', error )

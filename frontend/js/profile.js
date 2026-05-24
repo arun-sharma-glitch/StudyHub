@@ -7,6 +7,10 @@
 let currentUser = null;
 
 document.addEventListener('DOMContentLoaded', function () {
+
+  
+
+
   // Tab functionality
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
@@ -26,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
           content.classList.add('active');
 
           //check settings tab open then fill form
-          if(tabId === 'settings') {
+          if (tabId === 'settings') {
             fillSettingsForm();
           }
         }
@@ -67,45 +71,45 @@ document.addEventListener('DOMContentLoaded', function () {
   const save_changes = document.getElementById('save-changes')
 
   save_changes.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const firstName = document.getElementById('settingsFirstName').value;
+    e.preventDefault();
+    const firstName = document.getElementById('settingsFirstName').value;
 
-      const lastName = document.getElementById('settingsLastName').value;
+    const lastName = document.getElementById('settingsLastName').value;
 
-      const bio = document.getElementById('settingsBio').value;
+    const bio = document.getElementById('settingsBio').value;
 
-      const university = document.getElementById('settingsUniversity').value;
+    const university = document.getElementById('settingsUniversity').value;
 
-      try {
-        const response = await fetch(
-          '/api/user/profile',
-            {
-              method: 'PUT',
-              headers: {
-                'Content-Type':
-                'application/json'
-              },
-              body: JSON.stringify({ firstName, lastName, bio, university })
-            }
-          );
+    try {
+      const response = await fetch(
+        '/api/user/profile',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+          body: JSON.stringify({ firstName, lastName, bio, university })
+        }
+      );
 
-        if (!response.ok) {
-            throw new Error( 'Update failed' );
-            }
-
-        const data = await response.json();
-
-        currentUser = data.user;
-
-        //rendering user info
-        renderUser(currentUser);
-
-        console.log('Updated');
+      if (!response.ok) {
+        throw new Error('Update failed');
       }
-      catch (error) {
-        console.error( error)
-      }
+
+      const data = await response.json();
+
+      currentUser = data.user;
+
+      //rendering user info
+      renderUser(currentUser);
+
+      console.log('Updated');
     }
+    catch (error) {
+      console.error(error)
+    }
+  }
   )
 
   // Delete account button
@@ -165,16 +169,223 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('error', error);
     })
 
+
+  //fetching my notes
+  fetchMyNotes();
+
+  //fetch profile state
+  fetchStates();
+  
 });
+
+
+
+//fetch my notes function
+async function fetchMyNotes() {
+  try {
+    const response = await fetch('/api/notes/my-notes');
+
+    if (!response.ok) {
+      throw new Error(
+        'Failed to load notes'
+      );
+    }
+
+    const data = await response.json();
+    renderMyNotes(data.notes);
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//render my notes
+function renderMyNotes(notes) {
+  const container = document.getElementById('myNotesContainer');
+
+  container.innerHTML = '';
+  notes.forEach(
+    note => {
+      console.log(note);
+      const card = document.createElement('article');
+
+      card.className = 'card note-card';
+
+      //click listener to open pdf
+    card.addEventListener( 'click', async () => {
+        try {
+          await fetch(
+            `/api/notes/download/${note._id}`,
+            {
+              method: 'PATCH'
+            }
+          );
+
+          window.open(
+            `/${note.fileUrl}`,
+            '_blank'
+          );
+        }
+        catch (error) {
+          console.log(
+            error
+          );
+        }
+      }
+    );
+    
+
+    //card loading dynamically
+      card.innerHTML = `<div class="note-card-preview">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+
+                        <polyline points="14 2 14 8 20 8"></polyline>
+
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+
+                        </svg>
+
+                        </div>
+
+                        <div class="note-card-content">
+
+                        <span class="note-card-subject">
+
+                        ${note.subject}
+
+                        </span>
+
+                        <h3 class="note-card-title">
+
+                        ${note.title}
+
+                        </h3>
+
+                        <div class="note-card-meta">
+
+                        <span>
+
+                        Semester
+                        ${note.semester}
+
+                        </span>
+
+                        <span>
+
+                        ${note.downloads}
+
+                        downloads
+
+                        </span>
+
+                        </div>
+
+                        </div>
+
+                        <div class="note-card-footer">
+
+                        <span
+                        style="
+                        font-size:0.813rem;
+                        color:var(--text-muted);
+                        ">
+
+                        Uploaded
+
+                        ${new Date(
+        note.createdAt
+      ).toLocaleDateString()}
+
+                        </span>
+
+                        <button
+                        class="btn btn-ghost btn-icon"
+                        aria-label="More options">
+
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <circle
+                        cx="12"
+                        cy="12"
+                        r="1">
+
+                        </circle>
+
+                        <circle
+                        cx="19"
+                        cy="12"
+                        r="1">
+
+                        </circle>
+
+                        <circle
+                        cx="5"
+                        cy="12"
+                        r="1">
+
+                        </circle>
+
+                        </svg>
+
+                        </button>
+
+                        </div>
+                        `;
+
+      container.appendChild(
+        card
+      );
+
+    });
+
+}
 
 
 //fill settings form, when edit cliks and when settings click
 function fillSettingsForm() {
   if (currentUser) {
-          document.getElementById('settingsFirstName').value = currentUser.firstName;
-          document.getElementById('settingsLastName').value = currentUser.lastName;
-          document.getElementById('settingsEmail').value = currentUser.email;
-          document.getElementById('settingsBio').value = currentUser.bio || "";
-          document.getElementById('settingsUniversity').value = currentUser.university || "";
+    document.getElementById('settingsFirstName').value = currentUser.firstName;
+    document.getElementById('settingsLastName').value = currentUser.lastName;
+    document.getElementById('settingsEmail').value = currentUser.email;
+    document.getElementById('settingsBio').value = currentUser.bio || "";
+    document.getElementById('settingsUniversity').value = currentUser.university || "";
+  }
+}
+
+
+//fetch profile state total-uploads, total-downloads
+async function fetchStates() {
+  try{
+    const response = await fetch('/api/notes/profile-state');
+
+    if(!response.ok) {
+      throw new Error(
+        'Server Error'
+      );
+    }
+      const data = await response.json();
+
+      document.getElementById('total-notes').textContent = data.totalNotes;
+      document.getElementById('total-downloads').textContent = data.totalDownloads;
+    
+  } catch (error) {
+    console.log('error in fetching state', error);
   }
 }
