@@ -2,7 +2,10 @@ const express = require('express');
 const path = require('path');
 const authRoutes = require('../routes/authRoutes.js');
 const userRoutes = require('../routes/userRoutes.js');
+const noteRoutes = require('../routes/noteRoutes.js');
 const cookieParser = require('cookie-parser');
+
+
 
 
 const app = express();
@@ -11,16 +14,19 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, '../../frontend')));
 
 
 
-
-//this is actually the route for the auth controller, we will add more routes later
+//this is actually the route for the auth controller,
 app.use('/api/auth', authRoutes);
 
-//this is actually the route for the user controller, we will add more routes later
+//this is actually the route for the user controller,
 app.use('/api/user', userRoutes);
+
+//this is actually the route for the note controller,
+app.use('/api/notes', noteRoutes);
 
 
 
