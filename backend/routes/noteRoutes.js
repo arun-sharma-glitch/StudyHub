@@ -23,6 +23,15 @@ router.patch('/download/:id', noteController.increaseDownload);
 //profile state
 router.get('/profile-state', noteController.profileState);
 
+//delete note route
+router.delete('/delete/:id', noteController.deleteNote);
+
+//save note route
+router.patch('/bookmark/:id', noteController.bookmarkNote);
+
+//get saved notes route
+router.get('/saved', noteController.getSavedNotes);
+
 
 
 module.exports = router;

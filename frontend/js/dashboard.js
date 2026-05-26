@@ -92,24 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // In a real app, this would make an API call and update the notes grid
   }
 
-  // Bookmark functionality
-  document.querySelectorAll('.note-card-footer .btn-icon, .note-list-actions .btn-icon').forEach(btn => {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const svg = this.querySelector('svg');
-      const isBookmarked = this.classList.toggle('bookmarked');
-
-      if (isBookmarked) {
-        svg.setAttribute('fill', 'currentColor');
-        this.style.color = 'var(--primary)';
-      } else {
-        svg.setAttribute('fill', 'none');
-        this.style.color = '';
-      }
-    });
-  });
 
   // Close sidebar on window resize (if open on mobile)
   window.addEventListener('resize', function () {
@@ -159,14 +141,14 @@ async function fetchNotes() {
     }
 
     const data = await response.json();
-    renderAllNotes(data.notes);
+    renderAllNotes(data.notes, data.savedNotes);
   } catch (error) {
     console.log("error in getting all notes in dashboard: ", error);
   }
 }
 
 //rendering all notes
-function renderAllNotes(notes) {
+function renderAllNotes(notes, savedNotes) {
 
   const container = document.getElementById('notesContainer');
   container.innerHTML = '';
@@ -178,28 +160,28 @@ function renderAllNotes(notes) {
     card.className = 'card note-card';
 
     //click listener to open pdf
-    card.addEventListener( 'click', async () => {
-        try {
-          await fetch(
-            `/api/notes/download/${note._id}`,
-            {
-              method: 'PATCH'
-            }
-          );
+    card.addEventListener('click', async () => {
+      try {
+        await fetch(
+          `/api/notes/download/${note._id}`,
+          {
+            method: 'PATCH'
+          }
+        );
 
-          window.open(
-            `/${note.fileUrl}`,
-            '_blank'
-          );
-        }
-        catch (error) {
-          console.log(
-            error
-          );
-        }
+        window.open(
+          `/${note.fileUrl}`,
+          '_blank'
+        );
       }
+      catch (error) {
+        console.log(
+          error
+        );
+      }
+    }
     );
-    
+
 
     //card loading dynamically
     card.innerHTML = `<div class="note-card-preview">
@@ -305,10 +287,70 @@ function renderAllNotes(notes) {
 
                   `;
 
-    container.appendChild(
-      card
+
+    // Bookmark auto loaded
+    const bookmarkBtn = card.querySelector('.btn-icon');
+
+    const svg = bookmarkBtn.querySelector('svg');
+
+    
+
+    const isSaved = savedNotes.some(id => id.toString() === note._id);
+
+    if (isSaved) {
+
+      svg.setAttribute('fill', 'currentColor');
+
+      bookmarkBtn.style.color = 'var(--primary)';
+
+    }
+
+
+
+
+
+
+    //bookmark when clicked
+    bookmarkBtn.addEventListener('click', async function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      try {
+        const response = await fetch(
+          `/api/notes/bookmark/${note._id}`,
+          {
+            method: 'PATCH'
+          }
+        );
+        const data = await response.json();
+
+        if (data.saved) {
+          svg.setAttribute('fill', 'currentColor');
+
+          bookmarkBtn.style.color = 'var(--primary)';
+        }
+        else {
+          svg.setAttribute('fill', 'none');
+
+          bookmarkBtn.style.color = '';
+        }
+      }
+      catch (error) {
+
+        console.log(error);
+
+      }
+    }
     );
+
+
+
+
+
+
+    container.appendChild(card);
 
   });
 
 }
+

@@ -28,7 +28,11 @@ const userSchema = new mongoose.Schema({
     university:{
         type:String,
         default:""
-    }
+    },
+    savedNotes:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Note'
+    }]
 }, 
 {
         timestamps: true

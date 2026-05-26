@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const noteModel = require('../models/noteModel');
-
+const userModel = require('../models/userModel');
+const fs = require('fs');
+const path = require('path');
+const { decode } = require('punycode');
 
 
 //upload note
@@ -105,9 +108,15 @@ async function getNotes(req, res) {
                 'firstName lastName'
             );
 
+        const user = await userModel.findById(
+            decoded.id
+        );
+        const savedNotes = user.savedNotes;
+
         res.json({
-            notes
-        })
+            notes,
+            savedNotes
+        });
 
     } catch (error) {
         console.log('error in getting all notes: ', error);
@@ -143,6 +152,7 @@ async function getPublicNotes(req, res) {
 }
 
 
+//increase downloads
 async function increaseDownload(req, res) {
 
     try {
@@ -156,7 +166,7 @@ async function increaseDownload(req, res) {
                 }
             },
             {
-                returnDocument:'after'
+                returnDocument: 'after'
             }
         );
 
@@ -183,20 +193,20 @@ async function profileState(req, res) {
     try {
         const token = req.cookies.token;
 
-        if(!token) {
+        if (!token) {
             return res.status(400).json({
-                message:'Login required'
+                message: 'Login required'
             })
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const notes = await noteModel.find(
-            {uploadedBy: decoded.id}
+            { uploadedBy: decoded.id }
         );
 
         const totalNotes = notes.length;
-        const totalDownloads = notes.reduce((sum, note) => 
+        const totalDownloads = notes.reduce((sum, note) =>
             sum + note.downloads,
             0
         );
@@ -206,15 +216,235 @@ async function profileState(req, res) {
             totalDownloads
         })
 
-    }catch(error) {
+    } catch (error) {
         console.log(error);
         res.status(500).json({
-            message:'Server error'
+            message: 'Server error'
         })
     }
 }
 
+//delete notes
+async function deleteNote(req, res) {
+    try {
+        const token = req.cookies.token;
 
+        if (!token) {
+            return res.status(401).json({
+                message: 'Login required'
+            })
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!decoded) {
+            return res.status(401).json({
+                message: 'Login required'
+            })
+        }
+
+        const note = await noteModel.findById(
+            req.params.id
+        );
+
+        if (!note) {
+            return res.status(404).json({
+                message: 'Note not found'
+            })
+        }
+
+        if (note.uploadedBy.toString() !== decoded.id) {
+            return res.status(403).json({
+                message: 'Not allowed'
+            })
+        }
+
+
+
+        const filePath = path.join(__dirname, '../../', note.fileUrl);
+
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        await note.deleteOne();
+        res.json({
+            message: 'Note deleted successfully'
+        })
+
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: 'Server error'
+        })
+    }
+}
+
+//save note
+async function bookmarkNote(req, res) {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({
+                message: 'Login required'
+            });
+        }
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_SECRET
+        );
+
+        const noteId = req.params.id;
+
+        const user =
+            await userModel.findById(
+                decoded.id
+            );
+
+        const alreadySaved =
+            user.savedNotes.some(
+                id =>
+                    id.toString() === noteId
+            );
+
+        if (alreadySaved) {
+
+            await userModel.findByIdAndUpdate(
+                decoded.id,
+                {
+                    $pull: {
+                        savedNotes:
+                            noteId
+                    }
+                }
+            );
+
+        }
+        else {
+            await userModel.findByIdAndUpdate(
+
+                decoded.id,
+
+                {
+                    $push: {
+                        savedNotes:
+                            noteId
+                    }
+                }
+
+            );
+
+        }
+
+        res.json({
+
+            saved:
+                !alreadySaved,
+
+            message:
+
+                alreadySaved ? 'Note removed' : 'Note saved'
+        });
+
+    }
+
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message:
+                'Server error'
+        });
+
+    }
+
+}
+
+
+//get saved notes
+async function getSavedNotes(
+    req,
+    res
+) {
+
+    try {
+
+        const token =
+            req.cookies.token;
+
+        if (!token) {
+
+            return res
+                .status(401)
+                .json({
+
+                    message:
+                        'Login required'
+
+                });
+
+        }
+
+        const decoded =
+            jwt.verify(
+
+                token,
+
+                process.env.JWT_SECRET
+
+            );
+
+        const user =
+            await userModel
+                .findById(
+
+                    decoded.id
+
+                )
+                .populate({
+
+                    path:
+                        'savedNotes',
+
+                    populate: {
+
+                        path:
+                            'uploadedBy',
+
+                        select:
+                            'firstName lastName'
+
+                    }
+
+                });
+
+        res.json({
+
+            savedNotes:
+
+                user.savedNotes
+
+        });
+
+    }
+    catch (error) {
+
+        console.log(
+            error
+        );
+
+        res.status(500)
+            .json({
+
+                message:
+                    'Server error'
+
+            });
+
+    }
+
+}
 
 //exporting
 module.exports = {
@@ -223,5 +453,8 @@ module.exports = {
     getNotes,
     getPublicNotes,
     increaseDownload,
-    profileState
+    profileState,
+    deleteNote,
+    bookmarkNote,
+    getSavedNotes
 }
