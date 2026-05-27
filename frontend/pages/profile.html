@@ -52,14 +52,14 @@
             </svg>
             Upload Notes
           </a>
-          <a href="/profile?tabs=saved" class="sidebar-link">
+          <a href="/profile?tab=saved" class="sidebar-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
             </svg>
             Saved Notes
           </a>
-          
+
         </div>
 
         <div class="sidebar-section">
@@ -72,7 +72,7 @@
             </svg>
             Profile
           </a>
-          <a href="/profile?tabs=settings" class="sidebar-link">
+          <a href="/profile?tab=settings" class="sidebar-link">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path
@@ -174,7 +174,7 @@
             </div>
             <h3>No saved notes yet</h3>
             <p>Browse notes and click the bookmark icon to save them for later.</p>
-            <a href="/dashboard.html" class="btn btn-primary">Browse Notes</a>
+            <a href="/dashboard" class="btn btn-primary">Browse Notes</a>
           </div>
           <div class="notes-grid" id="savedNotesContainer">
 
@@ -216,18 +216,18 @@
 
           <div class="settings-section">
             <h3>Change Password</h3>
-            <form>
+            <form id="update-password">
               <div class="form-group">
-                <label class="form-label" for="currentPassword">Current Password</label>
+                <label class="form-label" for="currentPassword" id="current-password">Current Password</label>
                 <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password">
               </div>
               <div class="settings-row">
                 <div class="form-group">
-                  <label class="form-label" for="newPassword">New Password</label>
+                  <label class="form-label" for="newPassword" id="new-password">New Password</label>
                   <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="confirmPassword">Confirm New Password</label>
+                  <label class="form-label" for="confirmPassword" id="confirm-password">Confirm New Password</label>
                   <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
                 </div>
               </div>
@@ -239,7 +239,8 @@
             <h3>Danger Zone</h3>
             <p style="color: var(--text-secondary); margin-bottom: 16px;">Once you delete your account, there is no
               going back. Please be certain.</p>
-            <button type="button" class="btn" style="background: var(--error); color: white;">Delete Account</button>
+            <button type="button" id="delete-account-btn" class="btn"
+              style="background: var(--error); color: white;">Delete Account</button>
           </div>
         </div>
       </div>
@@ -256,6 +257,27 @@
       <button id="cancelDelete">Cancel</button>
       <button id="confirmDelete">Delete</button>
 
+    </div>
+  </div>
+
+
+  <!-- Delete Account Dialog  -->
+  <div class="dialog-overlay" id="deleteAccountDialog">
+    <div class="dialog">
+      <h3>Delete Account</h3>
+      <p>Enter password to confirm.</p>
+
+      <input type="password" id="deleteAccountPassword" placeholder="Enter password">
+
+      <div class="dialog-actions">
+        <button id="cancelDeleteAccount">
+          Cancel
+        </button>
+
+        <button id="confirmDeleteAccount">
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 

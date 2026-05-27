@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
       window.location.search
     );
 
-  const activeTab = params.get('tabs');
+  const activeTab = params.get('tab');
 
   if (activeTab) {
 
@@ -79,18 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Settings form submission
-  const settingsForms = document.querySelectorAll('.settings-section form');
-  settingsForms.forEach(form => {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      // Simulate saving (replace with actual API call)
-      console.log('Saving settings...');
-      alert('Settings saved successfully!');
-
-    });
-  });
 
 
   //separately adding event listener to save changes form button
@@ -136,41 +124,115 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error(error)
     }
   }
-  )
+  );
 
-  // Delete account button
-  const deleteBtn = document.querySelector('.settings-section .btn[style*="error"]');
-  if (deleteBtn) {
-    deleteBtn.addEventListener('click', function () {
-      const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.');
-      if (confirmed) {
-        console.log('Deleting account...');
-        alert('Account deletion would be processed here.');
+  //password update/change simulation
+  const updatePassword = document.getElementById('update-password');
+  if (updatePassword) {
+    updatePassword.addEventListener('submit', async (e) => {
+
+      e.preventDefault();
+
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (currentPassword && newPassword && confirmPassword) {
+        if (newPassword === confirmPassword) {
+          try {
+
+            const response = await fetch('/api/user/password', {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                currentPassword,
+                newPassword,
+                confirmPassword
+              })
+            },
+            );
+
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(
+                data.message
+              )
+            }
+
+            alert('Password Updated!');
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          alert('Please enter new and confirm password equal')
+        }
       }
+
     });
   }
 
-  // Note card more options
-  document.querySelectorAll('.note-card-footer .btn-icon[aria-label="More options"]').forEach(btn => {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
 
-      // In a real app, this would show a dropdown menu
-      const options = ['Edit', 'Delete', 'View Stats'];
-      const choice = prompt(`Options:\n1. Edit\n2. Delete\n3. View Stats\n\nEnter number:`);
 
-      if (choice === '1') {
-        alert('Edit functionality would open here');
-      } else if (choice === '2') {
-        if (confirm('Are you sure you want to delete this note?')) {
-          alert('Note would be deleted');
-        }
-      } else if (choice === '3') {
-        alert('Stats view would open here');
-      }
+
+
+  // Delete account button
+  const deleteBtn = document.getElementById('delete-account-btn');
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', function () {
+      document.getElementById('deleteAccountDialog').classList.add('show');
     });
+  }
+
+  //dialog close at clicking cancel
+  document.getElementById('cancelDeleteAccount').addEventListener(
+    'click', (e) => {
+            document.getElementById('deleteAccountDialog').classList.remove('show');
+    }
+  )
+
+  //do api call at clicking delete confirm
+  document.getElementById(
+    'confirmDeleteAccount'
+  ).addEventListener('click', async (e) => {
+    const password = document.getElementById('deleteAccountPassword').value;
+
+    if(!password) {
+      return;
+    }
+
+    try{
+      const response = await fetch(
+        '/api/user/account', 
+        {
+          method:'DELETE', 
+          headers: {
+            'Content-Type':'application/json'
+          },
+          body: JSON.stringify({
+            password
+          })
+        }, 
+      );
+
+      const data = await response.json();
+
+      if(!response.ok) {
+        throw new Error(data.message);
+      }
+
+      alert('Account Deleted!');
+
+      window.location.href = '/'
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
   });
+
 
 
 
