@@ -110,13 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
             data
           )
 
-          // Later JWT token
-
-          // localStorage.setItem(
-          // 'token',
-          // data.token
-          // )
-
+         
           window.location.href =
             '/dashboard'
 

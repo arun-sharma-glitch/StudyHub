@@ -1,30 +1,13 @@
-const jwt = require('jsonwebtoken');
 const noteModel = require('../models/noteModel');
 const userModel = require('../models/userModel');
 const fs = require('fs');
 const path = require('path');
-const { decode } = require('punycode');
 
 
 //upload note
 async function uploadNote(req, res) {
 
     try {
-        const token = req.cookies.token;
-
-        console.log(
-            req.body
-        );
-
-        console.log(
-            req.file
-        );
-
-        if (!token) {
-            return res.status(401).json({ message: "Login required!" });
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const { title, subject, semester, course, description, tags } = req.body;
 
@@ -36,7 +19,7 @@ async function uploadNote(req, res) {
             description,
             tags,
             fileUrl: req.file.path.replace('/\\/g', '/'),
-            uploadedBy: decoded.id,
+            uploadedBy: req.user.id
         });
 
         res.status(201).json({
@@ -57,17 +40,11 @@ async function uploadNote(req, res) {
 async function getMyNotes(req, res) {
 
     try {
-        const token = req.cookies.token;
-        if (!token) {
-            return res.status(401).json({ message: "Login required!" });
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+        
         const notes =
             await noteModel
                 .find({
-                    uploadedBy: decoded.id
+                    uploadedBy: req.user.id
                 })
                 .sort({
                     createdAt: -1
@@ -90,15 +67,6 @@ async function getMyNotes(req, res) {
 //get all Notes
 async function getNotes(req, res) {
     try {
-        const token = req.cookies.token;
-
-        if (!token) {
-            return res.status(401).json({ message: "Login required!" });
-        }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        if (!decoded) {
-            return res.status(401).json({ message: "Login required!" });
-        }
 
         const notes = await noteModel.find()
             .sort({
@@ -109,7 +77,7 @@ async function getNotes(req, res) {
             );
 
         const user = await userModel.findById(
-            decoded.id
+            req.user.id
         );
         const savedNotes = user.savedNotes;
 
@@ -191,18 +159,9 @@ async function increaseDownload(req, res) {
 //profile state
 async function profileState(req, res) {
     try {
-        const token = req.cookies.token;
-
-        if (!token) {
-            return res.status(400).json({
-                message: 'Login required'
-            })
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+        
         const notes = await noteModel.find(
-            { uploadedBy: decoded.id }
+            { uploadedBy: req.user.id }
         );
 
         const totalNotes = notes.length;
@@ -227,21 +186,6 @@ async function profileState(req, res) {
 //delete notes
 async function deleteNote(req, res) {
     try {
-        const token = req.cookies.token;
-
-        if (!token) {
-            return res.status(401).json({
-                message: 'Login required'
-            })
-        }
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        if (!decoded) {
-            return res.status(401).json({
-                message: 'Login required'
-            })
-        }
 
         const note = await noteModel.findById(
             req.params.id
@@ -253,7 +197,7 @@ async function deleteNote(req, res) {
             })
         }
 
-        if (note.uploadedBy.toString() !== decoded.id) {
+        if (note.uploadedBy.toString() !== req.user.id) {
             return res.status(403).json({
                 message: 'Not allowed'
             })
@@ -285,22 +229,12 @@ async function deleteNote(req, res) {
 //save note
 async function bookmarkNote(req, res) {
     try {
-        const token = req.cookies.token;
-        if (!token) {
-            return res.status(401).json({
-                message: 'Login required'
-            });
-        }
-        const decoded = jwt.verify(
-            token,
-            process.env.JWT_SECRET
-        );
 
         const noteId = req.params.id;
 
         const user =
             await userModel.findById(
-                decoded.id
+                req.user.id
             );
 
         const alreadySaved =
@@ -312,7 +246,7 @@ async function bookmarkNote(req, res) {
         if (alreadySaved) {
 
             await userModel.findByIdAndUpdate(
-                decoded.id,
+                req.user.id,
                 {
                     $pull: {
                         savedNotes:
@@ -325,7 +259,7 @@ async function bookmarkNote(req, res) {
         else {
             await userModel.findByIdAndUpdate(
 
-                decoded.id,
+                req.user.id,
 
                 {
                     $push: {
@@ -370,36 +304,12 @@ async function getSavedNotes(
 
     try {
 
-        const token =
-            req.cookies.token;
-
-        if (!token) {
-
-            return res
-                .status(401)
-                .json({
-
-                    message:
-                        'Login required'
-
-                });
-
-        }
-
-        const decoded =
-            jwt.verify(
-
-                token,
-
-                process.env.JWT_SECRET
-
-            );
 
         const user =
             await userModel
                 .findById(
 
-                    decoded.id
+                    req.user.id
 
                 )
                 .populate({

@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         //notes uploaded successful
         alert('Notes uploaded successfully!');
-        window.location.href = '/pages/dashboard.html';
+        window.location.href = '/dashboard';
 
       } catch (error) {
         //getting error in uploading

@@ -4,6 +4,9 @@ const authRoutes = require('../routes/authRoutes.js');
 const userRoutes = require('../routes/userRoutes.js');
 const noteRoutes = require('../routes/noteRoutes.js');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+const userModel =require('../models/userModel');
+const auth =require('../middlewares/authMiddleware');
 
 
 
@@ -15,7 +18,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
-app.use(express.static(path.join(__dirname, '../../frontend')));
+// app.use(express.static(path.join(__dirname, '../../frontend')));
+app.use('/css',express.static(path.join(__dirname, '../../frontend/css')));
+app.use('/js', express.static(path.join(__dirname, '../../frontend/js')));
 
 
 
@@ -78,9 +83,21 @@ app.get('/logout', (req, res) => {
 });
 
 //dashboard route
-app.get('/dashboard', (req, res) => {
+app.get('/dashboard', auth, (req, res) => {
     res.sendFile(path.join(__dirname, '../../frontend/pages/dashboard.html'));
 });
+
+//profile route
+app.get('/profile', auth, (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/pages/profile.html'));
+})
+
+//upload route
+app.get('/upload', auth, (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/pages/upload.html'))
+})
+
+
 
 
 
