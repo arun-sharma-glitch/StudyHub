@@ -32,7 +32,11 @@ const userSchema = new mongoose.Schema({
     savedNotes:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Note'
-    }]
+    }],
+    role:{
+        type:String,
+        default:'user'
+    }
 }, 
 {
         timestamps: true

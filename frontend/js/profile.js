@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-//function fro dialog
+//function for dialog
 async function dialogShowOrRemove() {
   document.getElementById('cancelDelete')
     .addEventListener('click', () => {
@@ -292,7 +292,7 @@ async function dialogShowOrRemove() {
           }
         );
 
-        const data = response.json();
+        const data = await response.json();
 
         if (!response.ok) {
           console.log(
@@ -668,7 +668,7 @@ function renderSavedNotes(
 
       );
 
-      card.innerHTML = card.innerHTML = `
+      card.innerHTML = `
 
 <div class="note-card-preview">
 

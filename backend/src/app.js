@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const userModel =require('../models/userModel');
 const auth =require('../middlewares/authMiddleware');
+///===============admin route=================///
+const adminRoutes = require('../routes/adminRoutes.js');
+const adminAuth = require('../middlewares/adminAuth');
 
 
 
@@ -32,6 +35,9 @@ app.use('/api/user', userRoutes);
 
 //this is actually the route for the note controller,
 app.use('/api/notes', noteRoutes);
+
+///===============admin route=================///
+app.use('/api/admin', adminRoutes);
 
 
 
@@ -90,13 +96,19 @@ app.get('/dashboard', auth, (req, res) => {
 //profile route
 app.get('/profile', auth, (req, res) => {
     res.sendFile(path.join(__dirname, '../../frontend/pages/profile.html'));
-})
+});
 
 //upload route
 app.get('/upload', auth, (req, res) => {
     res.sendFile(path.join(__dirname, '../../frontend/pages/upload.html'))
-})
+});
 
+
+//admin page route
+app.get('/admin', auth, adminAuth, (req,res)=>{
+        res.sendFile(path.join(__dirname, '../../frontend/pages/admin_dashboard.html'));
+    }
+);
 
 
 

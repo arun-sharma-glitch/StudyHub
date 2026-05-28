@@ -3,6 +3,9 @@
  * Handles sidebar, filters, and view toggle functionality
  */
 
+let allNotes = [];
+let savedNotes = [];
+
 document.addEventListener('DOMContentLoaded', function () {
   // Sidebar toggle for mobile
   const sidebarToggle = document.getElementById('sidebarToggle');
@@ -56,40 +59,220 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+
   // Search functionality
   const searchInput = document.getElementById('searchInput');
-  if (searchInput) {
-    let debounceTimer;
-    searchInput.addEventListener('input', function () {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => {
-        const query = this.value.toLowerCase();
-        filterNotes({ search: query });
-      }, 300);
-    });
-  }
 
-  // Filter functionality
   const subjectFilter = document.getElementById('subjectFilter');
+
   const semesterFilter = document.getElementById('semesterFilter');
+
   const sortFilter = document.getElementById('sortFilter');
 
+
+  //search input listener
+  if (searchInput) {
+
+    let debounceTimer;
+    searchInput.addEventListener('input', function () {
+
+        clearTimeout(debounceTimer);
+
+        debounceTimer = setTimeout(() => {
+
+            filterNotes({
+
+              search: searchInput.value.toLowerCase(),
+
+              subject: subjectFilter ? subjectFilter.value : '',
+
+              semester: semesterFilter ? semesterFilter.value : '',
+
+              sort: sortFilter ? sortFilter.value : 'recent'
+            });
+
+          }, 300);
+
+      }
+
+    );
+
+  }
+
+
+  //filter dropdown listeners
   [subjectFilter, semesterFilter, sortFilter].forEach(filter => {
     if (filter) {
       filter.addEventListener('change', function () {
-        filterNotes({
-          subject: subjectFilter ? subjectFilter.value : '',
-          semester: semesterFilter ? semesterFilter.value : '',
-          sort: sortFilter ? sortFilter.value : 'recent'
-        });
-      });
+          filterNotes({
+            search: searchInput ? searchInput.value
+                  .toLowerCase()
+                : '',
+
+            subject:
+              subjectFilter
+                ? subjectFilter.value
+                : '',
+
+            semester:
+              semesterFilter
+                ? semesterFilter.value
+                : '',
+
+            sort:
+              sortFilter
+                ? sortFilter.value
+                : 'recent'
+
+          });
+
+        }
+
+      );
+
     }
+
   });
 
-  // Filter notes function (placeholder - would connect to API)
-  function filterNotes(filters) {
-    console.log('Filtering notes:', filters);
-    // In a real app, this would make an API call and update the notes grid
+
+
+
+  //filter function
+  function filterNotes(
+    filters
+  ) {
+
+    let filtered =
+      [...allNotes];
+
+
+    //search filter
+    if (filters.search) {
+
+      filtered =
+        filtered.filter(
+          note =>
+
+            (note.title || '')
+              .toLowerCase()
+              .includes(
+                filters.search
+              )
+
+            ||
+
+            (note.subject || '')
+              .toLowerCase()
+              .includes(
+                filters.search
+              )
+
+            ||
+
+            (note.courseName || '')
+              .toLowerCase()
+              .includes(
+                filters.search
+              )
+
+        );
+
+    }
+
+
+    //subject filter
+    if (filters.subject) {
+
+      filtered =
+        filtered.filter(
+          note =>
+
+            note.subject ===
+            filters.subject
+
+        );
+
+    }
+
+
+    //semester filter
+    if (filters.semester) {
+
+      filtered =
+        filtered.filter(
+          note =>
+
+            note.semester
+              .toString()
+
+            ===
+
+            filters.semester
+
+        );
+
+    }
+
+
+    //sorting
+    if (
+      filters.sort ===
+      'downloads'
+    ) {
+
+      filtered.sort(
+        (a, b) =>
+
+          b.downloads -
+          a.downloads
+
+      );
+
+    }
+    else {
+
+      filtered.sort(
+        (a, b) =>
+
+          new Date(
+            b.createdAt
+          )
+
+          -
+
+          new Date(
+            a.createdAt
+          )
+
+      );
+
+    }
+
+
+    //no notes found
+    if (filtered.length === 0) {
+
+      document.getElementById(
+        'notesContainer'
+      ).innerHTML =
+
+        `<p class="empty-message">
+No notes found
+</p>`;
+
+      return;
+
+    }
+
+    //render filtered notes
+    renderAllNotes(
+
+      filtered,
+
+      savedNotes
+
+    );
+
   }
 
 
@@ -115,7 +298,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(userData => {
 
-      console.log('User Data:', userData);
 
       //calling this funtion of userUi 
       renderUser(userData.user);
@@ -132,6 +314,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+//fetch all notes
 async function fetchNotes() {
   try {
     const response = await fetch('/api/notes');
@@ -141,6 +324,8 @@ async function fetchNotes() {
     }
 
     const data = await response.json();
+    allNotes = data.notes;
+    savedNotes = data.savedNotes;
     renderAllNotes(data.notes, data.savedNotes);
   } catch (error) {
     console.log("error in getting all notes in dashboard: ", error);
@@ -293,7 +478,7 @@ function renderAllNotes(notes, savedNotes) {
 
     const svg = bookmarkBtn.querySelector('svg');
 
-    
+
 
     const isSaved = savedNotes.some(id => id.toString() === note._id);
 
@@ -353,4 +538,5 @@ function renderAllNotes(notes, savedNotes) {
   });
 
 }
+
 

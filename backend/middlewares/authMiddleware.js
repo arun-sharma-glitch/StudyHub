@@ -1,21 +1,25 @@
 const jwt = require('jsonwebtoken');
+const userModel = require('../models/userModel');
 
-function auth(req, res, next) {
+async function auth(req, res, next) {
     try {
         const token = req.cookies.token;
         if (!token) {
             return res.status(401).json({
-                    message: 'Login required'
-                });
+                message: 'Login required'
+            });
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+
+        const user = await userModel.findById(decoded.id);
+
+        req.user = user;
         next();
     }
     catch (error) {
         return res.status(401).json({
-                message: 'Invalid token'
-            });
+            message: 'Invalid token'
+        });
     }
 }
 
