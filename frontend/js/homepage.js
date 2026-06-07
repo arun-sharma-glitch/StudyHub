@@ -1,30 +1,18 @@
-document.addEventListener(
-  'DOMContentLoaded',
-  () => {
-
+document.addEventListener('DOMContentLoaded', () => {
     init();
-
     //fetching sample notes
     fetchPublicNotes();
   }
 );
 
 function init() {
-
   setupButtonAnimations();
-
   setupFeatureCards();
-
   setupNoteCards();
-
   setupHeroEffect();
-
   setupScrollReveal();
-
   setupCTAButton();
-
   setupSmoothScroll();
-
 }
 
 //fetch sample notes
@@ -35,9 +23,7 @@ async function fetchPublicNotes() {
     if (!response.ok) {
       throw new Error('Failed to load notes...!');
     }
-
     const data = await response.json();
-
     //rendering sample notes 
     renderPublicNotes(data.notes);
 
@@ -46,20 +32,14 @@ async function fetchPublicNotes() {
   }
 }
 
-
 //render public notes
 function renderPublicNotes(notes) {
-
   const container = document.getElementById('homepageNotesContainer');
-
   container.innerHTML = '';
 
   notes.forEach(note => {
-    const card =
-      document.createElement('article');
-
+    const card = document.createElement('article');
     card.className = 'card note-card';
-
     //click listener to open pdf
     card.addEventListener( 'click', async () => {
         try {
@@ -70,20 +50,14 @@ function renderPublicNotes(notes) {
             }
           );
 
-          window.open(
-            `/${note.fileUrl}`,
-            '_blank'
-          );
+          window.open(`/${note.fileUrl}`, '_blank');
         }
         catch (error) {
-          console.log(
-            error
-          );
+          console.log(error);
         }
       }
     );
     
-
     card.innerHTML = ` <div class="note-card-preview">
 
                       <svg xmlns="http://www.w3.org/2000/svg"
@@ -187,300 +161,121 @@ function renderPublicNotes(notes) {
                       </div>
                       `;
 
-    container.appendChild(
-      card
-    );
-
+    container.appendChild(card);
   });
-
   setupNoteCards();
-
 }
-
-
-
 
 // BUTTON ANIMATION
 function setupButtonAnimations() {
 
-  const buttons =
-    document.querySelectorAll('.btn');
-
+  const buttons = document.querySelectorAll('.btn');
   buttons.forEach(button => {
-
-    button.addEventListener(
-      'mouseenter',
-      () => {
-
-        button.style.transform =
-          'translateY(-2px)';
-
+    button.addEventListener('mouseenter', () => {
+        button.style.transform = 'translateY(-2px)';
       }
     );
-
-    button.addEventListener(
-      'mouseleave',
-      () => {
-
-        button.style.transform =
-          'translateY(0px)';
-
+    button.addEventListener('mouseleave',() => {
+        button.style.transform = 'translateY(0px)';
       }
     );
-
   });
-
 }
-
-
 // FEATURE CARD EFFECT
-
 function setupFeatureCards() {
-
-  const featureCards =
-    document.querySelectorAll(
-      '.feature-card'
-    );
-
+  const featureCards = document.querySelectorAll('.feature-card');
   featureCards.forEach(card => {
-
-    card.addEventListener(
-      'mouseenter',
-      () => {
-
-        card.style.transform =
-          'translateY(-10px)';
-
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px)';
       }
     );
-
-    card.addEventListener(
-      'mouseleave',
-      () => {
-
-        card.style.transform =
-          'translateY(0px)';
-
+    card.addEventListener( 'mouseleave', () => {
+        card.style.transform = 'translateY(0px)';
       }
     );
-
   });
-
 }
-
-
 // NOTE CARD EFFECT
-
 function setupNoteCards() {
-
-  const noteCards =
-    document.querySelectorAll(
-      '.note-card'
-    );
-
+  const noteCards = document.querySelectorAll('.note-card');
   noteCards.forEach(card => {
-
-    card.addEventListener(
-      'mouseenter',
-      () => {
-
-        card.style.transform =
-          'translateY(-8px)';
-
-        card.style.transition =
-          '0.3s';
-
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-8px)';
+        card.style.transition = '0.3s';
       }
     );
-
-    card.addEventListener(
-      'mouseleave',
-      () => {
-
-        card.style.transform =
-          'translateY(0px)';
-
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0px)';
       }
     );
-
   });
-
 }
-
-
 // HERO FLOATING EFFECT
-
 function setupHeroEffect() {
-
-  const floatingCards =
-    document.querySelectorAll(
-      '.floating-card'
-    );
-
-  window.addEventListener(
-    'mousemove',
-    (e) => {
-
-      const x =
-        e.clientX /
-        window.innerWidth;
-
-      const y =
-        e.clientY /
-        window.innerHeight;
-
+  const floatingCards = document.querySelectorAll('.floating-card');
+  window.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
       floatingCards.forEach(
         (card, index) => {
-
-          const speed =
-            (index + 1) * 12;
-
-          const moveX =
-            (x - 0.5) * speed;
-
-          const moveY =
-            (y - 0.5) * speed;
-
-          card.style.transform =
-            `translate(
-              ${moveX}px,
-              ${moveY}px
-            )`;
-
+          const speed = (index + 1) * 12;
+          const moveX = (x - 0.5) * speed;
+          const moveY = (y - 0.5) * speed;
+          card.style.transform = `translate(${moveX}px,${moveY}px)`;
         }
       );
-
     }
   );
-
 }
-
-
 // SCROLL REVEAL
-
 function setupScrollReveal() {
-
-  const revealElements =
-    document.querySelectorAll(
-      '.feature-card, .note-card, .stat-box'
-    );
-
-  revealElements.forEach(
-    element => {
-
-      element.style.opacity =
-        '0';
-
-      element.style.transform =
-        'translateY(40px)';
-
+  const revealElements = document.querySelectorAll('.feature-card, .note-card, .stat-box');
+  revealElements.forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(40px)';
     }
   );
-
   function reveal() {
+    const windowHeight = window.innerHeight;
+    revealElements.forEach(element => {
+        const top = element.getBoundingClientRect().top;
 
-    const windowHeight =
-      window.innerHeight;
-
-    revealElements.forEach(
-      element => {
-
-        const top =
-          element
-            .getBoundingClientRect()
-            .top;
-
-        if (
-          top <
-          windowHeight - 100
-        ) {
-
-          element.style.opacity =
-            '1';
-
-          element.style.transform =
-            'translateY(0px)';
-
-          element.style.transition =
-            '0.6s ease';
-
+        if (top < windowHeight - 100) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0px)';
+          element.style.transition = '0.6s ease';
         }
-
       }
     );
-
   }
-
-  window.addEventListener(
-    'scroll',
-    reveal
-  );
-
+  window.addEventListener('scroll', reveal);
   reveal();
-
 }
-
 
 // CTA BUTTON
-
 function setupCTAButton() {
-
-  const ctaButton =
-    document.querySelector(
-      '.btn-white'
-    );
-
+  const ctaButton = document.querySelector('.btn-white');
   if (!ctaButton) return;
-
-  ctaButton.addEventListener(
-    'click',
-    () => {
-
-      alert(
-        'Welcome to StudyHub 🚀'
-      );
-
+  ctaButton.addEventListener('click', () => {
+      alert('Welcome to StudyHub 🚀');
     }
   );
-
 }
 
-
 // SMOOTH SCROLL
-
 function setupSmoothScroll() {
-
-  document
-    .querySelectorAll(
-      'a[href^="#"]'
-    )
-    .forEach(anchor => {
-
-      anchor.addEventListener(
-        'click',
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click',
         function (e) {
-
           e.preventDefault();
-
-          const target =
-            document.querySelector(
-              this.getAttribute(
-                'href'
-              )
+          const target = document.querySelector(
+              this.getAttribute('href')
             );
-
           if (!target) return;
-
           target.scrollIntoView({
-
-            behavior:
-              'smooth'
-
+            behavior: 'smooth'
           });
-
         }
       );
-
     });
-
 }

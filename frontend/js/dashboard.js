@@ -59,46 +59,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-
   // Search functionality
   const searchInput = document.getElementById('searchInput');
-
   const subjectFilter = document.getElementById('subjectFilter');
-
   const semesterFilter = document.getElementById('semesterFilter');
-
   const sortFilter = document.getElementById('sortFilter');
-
 
   //search input listener
   if (searchInput) {
-
     let debounceTimer;
     searchInput.addEventListener('input', function () {
-
         clearTimeout(debounceTimer);
-
         debounceTimer = setTimeout(() => {
-
             filterNotes({
-
               search: searchInput.value.toLowerCase(),
-
               subject: subjectFilter ? subjectFilter.value : '',
-
               semester: semesterFilter ? semesterFilter.value : '',
-
               sort: sortFilter ? sortFilter.value : 'recent'
             });
-
           }, 300);
-
       }
-
     );
-
   }
-
 
   //filter dropdown listeners
   [subjectFilter, semesterFilter, sortFilter].forEach(filter => {
@@ -123,19 +105,11 @@ document.addEventListener('DOMContentLoaded', function () {
               sortFilter
                 ? sortFilter.value
                 : 'recent'
-
           });
-
         }
-
       );
-
     }
-
   });
-
-
-
 
   //filter function
   function filterNotes(
@@ -145,10 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let filtered =
       [...allNotes];
 
-
     //search filter
     if (filters.search) {
-
       filtered =
         filtered.filter(
           note =>
@@ -166,17 +138,13 @@ document.addEventListener('DOMContentLoaded', function () {
               .includes(
                 filters.search
               )
-
             ||
-
             (note.courseName || '')
               .toLowerCase()
               .includes(
                 filters.search
               )
-
         );
-
     }
 
 
@@ -194,61 +162,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-
     //semester filter
     if (filters.semester) {
-
-      filtered =
-        filtered.filter(
-          note =>
-
-            note.semester
-              .toString()
-
-            ===
-
-            filters.semester
-
-        );
-
+      filtered =  filtered.filter(  note => note.semester.toString() === filters.semester);
     }
-
 
     //sorting
-    if (
-      filters.sort ===
-      'downloads'
-    ) {
-
+    if (filters.sort === 'downloads' ) {
       filtered.sort(
         (a, b) =>
-
-          b.downloads -
-          a.downloads
-
+          b.downloads - a.downloads
       );
-
     }
     else {
-
       filtered.sort(
         (a, b) =>
-
-          new Date(
-            b.createdAt
-          )
-
-          -
-
-          new Date(
-            a.createdAt
-          )
-
+          new Date(b.createdAt) - new Date(a.createdAt)
       );
-
     }
-
-
     //no notes found
     if (filtered.length === 0) {
 
@@ -261,20 +192,11 @@ No notes found
 </p>`;
 
       return;
-
     }
-
     //render filtered notes
-    renderAllNotes(
-
-      filtered,
-
-      savedNotes
-
-    );
+    renderAllNotes(filtered, savedNotes);
 
   }
-
 
   // Close sidebar on window resize (if open on mobile)
   window.addEventListener('resize', function () {
@@ -285,7 +207,6 @@ No notes found
       }
     }
   });
-
 
   //api to set user info
   fetch('/api/user/profile')
@@ -298,7 +219,6 @@ No notes found
     })
     .then(userData => {
 
-
       //calling this funtion of userUi 
       renderUser(userData.user);
     })
@@ -307,22 +227,17 @@ No notes found
     })
   // }
 
-
-
   //fetch notes
   fetchNotes();
 });
-
 
 //fetch all notes
 async function fetchNotes() {
   try {
     const response = await fetch('/api/notes');
-
     if (!response.ok) {
       throw new Error('Failed to load notes');
     }
-
     const data = await response.json();
     allNotes = data.notes;
     savedNotes = data.savedNotes;
@@ -339,11 +254,8 @@ function renderAllNotes(notes, savedNotes) {
   container.innerHTML = '';
 
   notes.forEach(note => {
-
     const card = document.createElement('article');
-
     card.className = 'card note-card';
-
     //click listener to open pdf
     card.addEventListener('click', async () => {
       try {
@@ -354,10 +266,7 @@ function renderAllNotes(notes, savedNotes) {
           }
         );
 
-        window.open(
-          `/${note.fileUrl}`,
-          '_blank'
-        );
+        window.open(`/${note.fileUrl}`,'_blank');
       }
       catch (error) {
         console.log(
@@ -366,7 +275,6 @@ function renderAllNotes(notes, savedNotes) {
       }
     }
     );
-
 
     //card loading dynamically
     card.innerHTML = `<div class="note-card-preview">
@@ -413,7 +321,7 @@ function renderAllNotes(notes, savedNotes) {
                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                   </svg>
-                  Semester ${note.semester}
+                  ${note.semester}
                   </span>
                   <span>
                   <svg xmlns="http://www.w3.org/2000/svg"
@@ -478,28 +386,18 @@ function renderAllNotes(notes, savedNotes) {
 
     const svg = bookmarkBtn.querySelector('svg');
 
-
-
     const isSaved = savedNotes.some(id => id.toString() === note._id);
 
     if (isSaved) {
-
       svg.setAttribute('fill', 'currentColor');
-
       bookmarkBtn.style.color = 'var(--primary)';
 
     }
-
-
-
-
-
 
     //bookmark when clicked
     bookmarkBtn.addEventListener('click', async function (e) {
       e.preventDefault();
       e.stopPropagation();
-
       try {
         const response = await fetch(
           `/api/notes/bookmark/${note._id}`,
@@ -527,16 +425,10 @@ function renderAllNotes(notes, savedNotes) {
       }
     }
     );
-
-
-
-
-
-
+    //apending created card to container
     container.appendChild(card);
 
   });
-
 }
 
 

@@ -3,38 +3,28 @@
  * Handles tabs and profile settings
  */
 
-
 let currentUser = null;
 let selectedNoteId = null;
-
 document.addEventListener('DOMContentLoaded', function () {
-
-
-
 
   // Tab functionality
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
-
   tabBtns.forEach(btn => {
     btn.addEventListener('click', function () {
       const tabId = this.dataset.tab;
-
       // Update active tab button
       tabBtns.forEach(b => b.classList.remove('active'));
       this.classList.add('active');
-
       // Update active tab content
       tabContents.forEach(content => {
         content.classList.remove('active');
         if (content.id === tabId) {
           content.classList.add('active');
-
           //check settings tab open then fill form
           if (tabId === 'settings') {
             fillSettingsForm();
           }
-
           //fetch saved notes
           if (tabId === 'saved') {
             fetchSavedNotes()
@@ -43,21 +33,16 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
-
   //href to redirect profile and tab change
   const params =
     new URLSearchParams(
       window.location.search
     );
-
   const activeTab = params.get('tab');
-
   if (activeTab) {
-
     setTimeout(() => {
       const tabBtn =
         document.querySelector(`[data-tab="${activeTab}"]`);
-
       if (tabBtn) {
         tabBtn.click();
       }
@@ -72,28 +57,20 @@ document.addEventListener('DOMContentLoaded', function () {
       const settingsTab = document.querySelector('.tab-btn[data-tab="settings"]');
       if (settingsTab) {
         settingsTab.click();
-
         //call fill settings form when edit button clicked
         fillSettingsForm()
       }
     });
   }
 
-
-
   //separately adding event listener to save changes form button
   const save_changes = document.getElementById('save-changes')
-
   save_changes.addEventListener('submit', async (e) => {
     e.preventDefault();
     const firstName = document.getElementById('settingsFirstName').value;
-
     const lastName = document.getElementById('settingsLastName').value;
-
     const bio = document.getElementById('settingsBio').value;
-
     const university = document.getElementById('settingsUniversity').value;
-
     try {
       const response = await fetch(
         '/api/user/profile',
@@ -106,19 +83,14 @@ document.addEventListener('DOMContentLoaded', function () {
           body: JSON.stringify({ firstName, lastName, bio, university })
         }
       );
-
       if (!response.ok) {
         throw new Error('Update failed');
       }
-
       const data = await response.json();
-
       currentUser = data.user;
-
       //rendering user info
       renderUser(currentUser);
-
-      console.log('Updated');
+      // console.log('Updated');
     }
     catch (error) {
       console.error(error)
@@ -130,17 +102,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const updatePassword = document.getElementById('update-password');
   if (updatePassword) {
     updatePassword.addEventListener('submit', async (e) => {
-
       e.preventDefault();
-
       const currentPassword = document.getElementById('currentPassword').value;
       const newPassword = document.getElementById('newPassword').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
-
       if (currentPassword && newPassword && confirmPassword) {
         if (newPassword === confirmPassword) {
           try {
-
             const response = await fetch('/api/user/password', {
               method: 'PATCH',
               headers: {
@@ -153,8 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
               })
             },
             );
-
-
             const data = await response.json();
 
             if (!response.ok) {
@@ -162,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.message
               )
             }
-
             alert('Password Updated!');
           } catch (error) {
             console.log(error);
@@ -174,10 +139,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
   }
-
-
-
-
 
   // Delete account button
   const deleteBtn = document.getElementById('delete-account-btn');
@@ -217,13 +178,10 @@ document.addEventListener('DOMContentLoaded', function () {
           })
         }, 
       );
-
       const data = await response.json();
-
       if(!response.ok) {
         throw new Error(data.message);
       }
-
       alert('Account Deleted!');
 
       window.location.href = '/'
@@ -232,9 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
       alert(error);
     }
   });
-
-
-
 
   //fetching api 
   fetch('/api/user/profile')
@@ -260,10 +215,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //fetching my notes
   fetchMyNotes();
-
   //fetch profile state
   fetchStates();
-
   //dialog features
   dialogShowOrRemove();
 
@@ -295,26 +248,16 @@ async function dialogShowOrRemove() {
         const data = await response.json();
 
         if (!response.ok) {
-          console.log(
-            data
-          );
-
-          throw new Error(
-            data.message
-          );
+          // console.log(data);
+          throw new Error(data.message);
         }
 
-        document.getElementById('deleteDialog')
-          .classList.remove('show');
-
+        document.getElementById('deleteDialog').classList.remove('show');
         selectedNoteId = null;
-
         //fetch notes after deletition of notes
         fetchMyNotes();
-
         //fetch state after deletion of notes
         fetchStats();
-
       }
       catch (error) {
         console.log(error);
@@ -338,7 +281,6 @@ async function fetchMyNotes() {
 
     const data = await response.json();
     renderMyNotes(data.notes);
-
   } catch (error) {
     console.log(error);
   }
@@ -347,15 +289,11 @@ async function fetchMyNotes() {
 //render my notes
 function renderMyNotes(notes) {
   const container = document.getElementById('myNotesContainer');
-
   container.innerHTML = '';
-  notes.forEach(
-    note => {
+  notes.forEach( note => {
       console.log(note);
       const card = document.createElement('article');
-
       card.className = 'card note-card';
-
 
       //click listener to open pdf
       card.addEventListener('click', async () => {
@@ -367,10 +305,7 @@ function renderMyNotes(notes) {
             }
           );
 
-          window.open(
-            `/${note.fileUrl}`,
-            '_blank'
-          );
+          window.open(`/${note.fileUrl}`,'_blank');
         }
         catch (error) {
           console.log(
@@ -546,9 +481,6 @@ function renderMyNotes(notes) {
             );
         }
         );
-
-      //------------------\\
-
     });
 
 }
@@ -600,27 +532,19 @@ async function fetchSavedNotes() {
     }
 
     const data = await response.json();
-
     const emptyState = document.getElementById('savedEmptyState');
-
     const container = document.getElementById('savedNotesContainer');
 
     if (data.savedNotes.length === 0) {
-
       emptyState.style.display = 'block';
-
       container.innerHTML = '';
-
       return;
     }
-
     emptyState.style.display = 'none';
-
     //rendering saved notes
     renderSavedNotes(data.savedNotes);
   }
   catch (error) {
-
     console.log(
       error
     );
@@ -630,44 +554,19 @@ async function fetchSavedNotes() {
 function renderSavedNotes(
   savedNotes
 ) {
-
   const container =
     document.getElementById(
       'savedNotesContainer'
     );
-
   container.innerHTML = '';
-
   savedNotes.forEach(
-
     note => {
-
-      const card =
-        document.createElement(
-          'article'
-        );
-
-      card.className =
-        'card note-card';
-
-      card.addEventListener(
-
-        'click',
-
-        () => {
-
-          window.open(
-
-            `/${note.fileUrl}`,
-
-            '_blank'
-
-          );
-
+      const card = document.createElement('article');
+      card.className = 'card note-card';
+      card.addEventListener( 'click', () => {
+          window.open(`/${note.fileUrl}`, '_blank');
         }
-
       );
-
       card.innerHTML = `
 
 <div class="note-card-preview">
@@ -796,13 +695,9 @@ class="note-card-author">
 class="note-card-avatar">
 
 ${(
-
           (note.uploadedBy?.firstName?.[0] || 'U')
-
           +
-
           (note.uploadedBy?.lastName?.[0] || '')
-
         ).toUpperCase()}
 
 </div>
@@ -858,38 +753,19 @@ d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z">
           '.btn-icon'
         );
 
-      bookmarkBtn.addEventListener(
-
-        'click',
-
-        async (e) => {
-
+      bookmarkBtn.addEventListener('click', async (e) => {
           e.stopPropagation();
-
-          await fetch(
-
-            `/api/notes/bookmark/${note._id}`,
-
+          await fetch( `/api/notes/bookmark/${note._id}`,
             {
-
               method: 'PATCH'
-
             }
-
           );
-
           card.remove();
-
         }
-
       );
-
       container.appendChild(
         card
       );
-
     }
-
   );
-
 }
