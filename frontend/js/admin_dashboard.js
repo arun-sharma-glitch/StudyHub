@@ -376,8 +376,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 );
 
-
-
                 //delete btn 
                 const deleteBtn =
                     card.querySelector('.delete-btn');
@@ -394,7 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         setupDeleteDialog('notes', note._id);
                     });
 
-                //------------------\\
 
             });
 
@@ -422,7 +419,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     total_users.textContent = data.totalUsers;
                     recent_uploads.textContent = data.recentUploads;
                 }
-
 
 
             } catch (error) {
@@ -486,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //function for dialog
     function setupDeleteDialog(deleteType, selectedId) {
-        
+        document.getElementById('deleteTitle').innerText = deleteType === "users" ? "User" : "Note";
         document.getElementById('deleteDialog').classList.add('show');
 
 
@@ -497,7 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     .classList.remove('show');
             }
             
-
 
         document.getElementById('confirmDelete')
             .onclick = async () => {
